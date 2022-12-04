@@ -7,9 +7,10 @@ import java.util.List;
 public class ListView {
     
     private List<Member> memList = new ArrayList<Member>(); // 
-   
+    private List<String> idList = new ArrayList<String>();
     private static ListView instance;
     private int memCount = 0, groupCount = 0;
+    private boolean valid = true;
     
     private ListView() {
 	User root = new User();
@@ -23,6 +24,29 @@ public class ListView {
 	}
 	    return instance;
 	}
+    
+    public void validateCheck(String id) {
+	if (!valid)
+	    return;
+	if (id.contains(" "))
+	{
+	    valid = false;
+	    return;
+	}
+	if (idList.contains(id))
+	{
+	    valid = false;
+	    return;
+	}
+	idList.add(id);	
+    }
+    
+    public String getValidate()
+    {
+	if (valid)
+	    return "Cool valid";
+	return "no valid D:";
+    }
 
     public Member findGroup(String group){
 	String g;

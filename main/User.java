@@ -8,6 +8,7 @@ public class User implements Member, Observer{
     private String name;
     private List<User> following = new ArrayList<User>();
     private List<User> followers = new ArrayList<User>();   
+    private long creationTime = 0;
     
     @Override
     public void clickOn() {
@@ -22,6 +23,13 @@ public class User implements Member, Observer{
 
     public void setName(String name) {
 	this.name = name;
+	creationTime = System.currentTimeMillis();
+	if (!name.equals("Current Following:"))
+	    System.out.println(name + " has been created on " + creationTime);
+    }
+    
+    public String getcreationTime() {
+	return String.valueOf(creationTime);
     }
 
 

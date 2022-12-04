@@ -8,6 +8,7 @@ public class Group implements Member {
     private List<Member> memList = new ArrayList<Member>();
     private String name;
     private static int count = 0;
+    private long creationTime = 0;
     
     @Override
     public void clickOn() {
@@ -55,6 +56,12 @@ public class Group implements Member {
     
     public void setName(String name) {
 	this.name = name;
+	creationTime = System.currentTimeMillis();
+	System.out.println(name + " has been created on " + creationTime);
+    }
+    
+    public String getCreationTime() {
+	return String.valueOf(creationTime);
     }
     
     @Override

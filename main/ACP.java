@@ -23,7 +23,7 @@ public class ACP extends JFrame implements ActionListener{
     
     private JFrame admin = new JFrame("Admin Control Panel");
     private JPanel treeView;
-    private JButton AddUser, AddGroup, UserView, UserTotal, GroupTotal, MessageTotal, Positive;
+    private JButton AddUser, AddGroup, UserView, validate, update, UserTotal, GroupTotal, MessageTotal, Positive;
     private JTextField user,group;
     private JLabel tvText;
     private String clickOn = "<Root>"; // initially select root lol
@@ -71,6 +71,7 @@ public class ACP extends JFrame implements ActionListener{
 		if (!(user.getText().equals("")))
 		{
     		    uB.add(user.getText(), clickOn);
+    		    lv.validateCheck(user.getText());
     		    user.setText("");
     		    refreshTreeView();
     		    clickOn = "<Root>";
@@ -90,6 +91,7 @@ public class ACP extends JFrame implements ActionListener{
 		if (!(group.getText().equals(""))) 
 		{
 		    gB.add(group.getText(), clickOn);
+		    lv.validateCheck(group.getText());
 		    group.setText("");
 		    refreshTreeView();
 		    clickOn = "<Root>";
@@ -101,10 +103,22 @@ public class ACP extends JFrame implements ActionListener{
 	admin.add(AddGroup);
 	
 	UserView = new JButton("Open User View");
-	UserView.setBounds(550, 250, 200, 50);
+	UserView.setBounds(550, 150, 200, 50);
 	UserView.addActionListener(this);
 	UserView.setFocusable(false);
 	admin.add(UserView);
+	
+	validate = new JButton("Validate IDs");
+	validate.setBounds(550, 250, 200, 50);
+	validate.addActionListener(this);
+	validate.setFocusable(false);
+	admin.add(validate);
+	
+	update = new JButton("Last Updated User");
+	update.setBounds(550, 320, 200, 50);
+	update.addActionListener(this);
+	update.setFocusable(false);
+	admin.add(update);
 	
 	UserTotal = new JButton("Show User Total");
 	UserTotal.setBounds(450, 400, 200, 50);
@@ -167,6 +181,11 @@ public class ACP extends JFrame implements ActionListener{
 	    User u = (User) lv.findMember(clickOn);
 	    new UserView_Panel(u);	    
 	}
+	else if (e.getSource() == validate)
+	{
+	    System.out.println(lv.getValidate());
+	    popUpWindow("Validate Check", lv.getValidate(), "");
+	}
 	else if (e.getSource() == UserTotal)
 	{
 	    count = lv.acceptChat(visitor);
@@ -186,6 +205,10 @@ public class ACP extends JFrame implements ActionListener{
 	{
 	    positive = nf.acceptPositive(visitor);
 	    popUpWindow("Positive Message Total", "Positive Percentage: ", positive + "%");	    
+	}
+	else if (e.getSource() == update)
+	{
+	    popUpWindow("Last updated user", "Last updated user: ", nf.getLastUpdateID());
 	}
     }
     
